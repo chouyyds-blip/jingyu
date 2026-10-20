@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>竞遇 · 大学生竞赛信息与组队管理系统</title>
+  <link rel="stylesheet" href="/style.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#competitions"><span class="brand-icon">竞</span><span>竞遇<small>CAMPUS COMPETITION</small></span></a>
+    <p class="nav-label">工作空间</p>
+    <nav aria-label="主导航">
+      <button data-page="competitions" class="nav-item active">◈ <span>发现竞赛</span></button>
+      <button data-page="teams" class="nav-item">▦ <span>队伍与招募</span></button>
+      <button data-page="registrations" class="nav-item">▤ <span>报名记录</span></button>
+      <button data-page="profile" class="nav-item">◎ <span>个人资料</span></button>
+    </nav>
+    <div class="sidebar-note"><span class="dot"></span>课程实践 · 开发初版<p>查找竞赛，与伙伴一起出发。</p></div>
+    <div id="account" class="account"></div>
+  </aside>
+  <main>
+    <header class="topbar"><span>大学生竞赛信息与组队管理系统</span><span class="badge">本地演示版 v0.1</span></header>
+    <div class="workspace">
+      <section class="hero"><div><p class="eyebrow">FIND YOUR NEXT CHALLENGE</p><h1>让好点子，遇见好队友。</h1><p>从发现竞赛到组队报名，把参赛的第一步走得更简单。</p></div><div class="hero-art" aria-hidden="true"><span>✦</span><div>IDEA<br>TEAM<br>GO!</div></div></section>
+      <div id="page-heading" class="page-heading"></div>
+      <div id="content" aria-live="polite"></div>
+      <footer>课程项目开发初版 · 内置竞赛均为演示数据 · 报名仅为本系统内登记</footer>
+    </div>
+  </main>
+  <dialog id="modal"><div class="modal-head"><h2 id="modal-title"></h2><button id="close-modal" aria-label="关闭">×</button></div><div id="modal-body"></div></dialog>
+  <div id="toast" role="status"></div>
+</body>
+</html>
