@@ -9,3 +9,10 @@ tmp/
 *.[dD][oO][cC]
 *.[dD][oO][cC][xX]
 ~$*
+
+# 可复现的验收产物与私有备份
+output/backups/
+output/acceptance/ui-export.csv
+output/acceptance/browser-failure.png
+!output/pdf/
+!output/pdf/*.pdf

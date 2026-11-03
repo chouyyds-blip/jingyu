@@ -1,0 +1,8 @@
+{
+  "pages": 24,
+  "format": "A4 PDF",
+  "sha256": "6cb87686d37395dad37f4be3121196aa93034e536a6af18d8fdaba851e9c3841",
+  "visual_review": "已查看24页最新Poppler渲染，核对封面、目录、图表、重复表头、分页和中文字符；无重叠或裁切",
+  "reference_status": "AI辅助工程参考稿，个人过程材料待补齐",
+  "render_tool": "Poppler pdftoppm，1500像素长边，内部QA文件在tmp/report-render"
+}

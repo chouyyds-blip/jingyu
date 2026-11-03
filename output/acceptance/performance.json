@@ -1,0 +1,9 @@
+{
+  "scope": "本机临时数据库竞赛列表，小样本，不代表互联网或大数据量负载",
+  "requests": 40,
+  "workers": 5,
+  "p95_seconds": 0.2142,
+  "max_seconds": 0.2506,
+  "target_p95_seconds": 2,
+  "passed": true
+}

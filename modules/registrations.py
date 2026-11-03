@@ -1,7 +1,46 @@
 """陈：队伍报名提交、报名记录查询和管理员审核。"""
 
 from datetime import date, datetime
+import csv
+import io
+import json
 import re
+
+
+def initialize(db):
+    """升级旧库时仅记录可证实的现状，不补造过去的提交或审核事件。"""
+    db.execute('''CREATE TABLE IF NOT EXISTS registration_history (
+        id INTEGER PRIMARY KEY,
+        registration_id INTEGER NOT NULL REFERENCES registrations(id) ON DELETE CASCADE,
+        action TEXT NOT NULL, status TEXT NOT NULL,
+        actor_id INTEGER REFERENCES users(id), actor_name TEXT NOT NULL,
+        occurred_at TEXT NOT NULL, review_note TEXT NOT NULL DEFAULT '',
+        contact_name TEXT NOT NULL, contact_phone TEXT NOT NULL,
+        statement TEXT NOT NULL, members_json TEXT NOT NULL)''')
+    db.execute('''CREATE INDEX IF NOT EXISTS idx_registration_history_record
+                  ON registration_history(registration_id, id)''')
+    rows = db.execute('''SELECT r.* FROM registrations r WHERE NOT EXISTS
+                      (SELECT 1 FROM registration_history h WHERE h.registration_id = r.id)''').fetchall()
+    for row in rows:
+        _history(db, dict(row), 'migrated', None, '旧数据迁移（原审核人未知）',
+                 datetime.now().isoformat(timespec='seconds'), _members(db, row['team_id']))
+
+
+def _members(db, team_id):
+    return [dict(row) for row in db.execute('''
+        SELECT u.id, u.name, u.major FROM users u
+        JOIN team_members tm ON tm.user_id = u.id
+        WHERE tm.team_id = ? ORDER BY u.id''', (team_id,)).fetchall()]
+
+
+def _history(db, record, action, actor_id, actor_name, occurred_at, members):
+    db.execute('''INSERT INTO registration_history
+        (registration_id, action, status, actor_id, actor_name, occurred_at,
+         review_note, contact_name, contact_phone, statement, members_json)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+        (record['id'], action, record['status'], actor_id, actor_name, occurred_at,
+         record['review_note'], record['contact_name'], record['contact_phone'],
+         record['statement'], json.dumps(members, ensure_ascii=False)))
 
 
 def _text(data, key, label, maximum, required=True):
@@ -64,17 +103,38 @@ def _list_registrations(ctx):
     registrations = []
     for row in ctx.db.execute(sql, values).fetchall():
         record = dict(row)
-        record["members"] = [
-            dict(member)
-            for member in ctx.db.execute(
-                """SELECT u.id, u.name, u.major FROM users u
-                   JOIN team_members tm ON tm.user_id = u.id
-                   WHERE tm.team_id = ? ORDER BY u.id""",
-                (record["team_id"],),
-            ).fetchall()
-        ]
+        record["history"] = []
+        for event in ctx.db.execute(
+            "SELECT * FROM registration_history WHERE registration_id = ? ORDER BY id", (record['id'],)
+        ).fetchall():
+            item = dict(event)
+            item['members'] = json.loads(item.pop('members_json'))
+            record['history'].append(item)
+        record['members'] = record['history'][-1]['members'] if record['history'] else _members(ctx.db, record['team_id'])
         registrations.append(record)
     return {"registrations": registrations}
+
+
+def _csv_cell(value):
+    value = str(value)
+    # Excel/WPS 会把以这些字符开头的单元格解释为公式；空白也可能被跳过。
+    if value.lstrip().startswith(('=', '+', '-', '@')) or value.startswith(('\t', '\r', '\n')):
+        return "'" + value
+    return value
+
+
+def _export(ctx):
+    records = _list_registrations(ctx)['registrations']
+    output = io.StringIO(newline='')
+    writer = csv.writer(output)
+    writer.writerow(['报名编号', '竞赛', '队伍', '联系人', '联系电话', '参赛说明', '成员', '状态', '审核意见', '提交时间', '更新时间'])
+    labels = {'pending': '待审核', 'approved': '已通过', 'rejected': '已驳回'}
+    for r in records:
+        writer.writerow([_csv_cell(v) for v in (
+            r['id'], r['competition_title'], r['team_name'], r['contact_name'],
+            r['contact_phone'], r['statement'], '、'.join(m['name'] for m in r['members']),
+            labels[r['status']], r['review_note'], r['created_at'], r['updated_at'])])
+    return {'filename': '报名记录.csv', 'content': '\ufeff' + output.getvalue()}
 
 
 def _submit(ctx, data):
@@ -131,11 +191,17 @@ def _submit(ctx, data):
             (team_id, contact_name, contact_phone, statement, now, now),
         )
         registration_id = cursor.lastrowid
+    record = dict(ctx.db.execute('SELECT * FROM registrations WHERE id = ?', (registration_id,)).fetchone())
+    # 重提继续沿用首次提交的名单快照，个人资料修改不能改写报名事实。
+    previous = ctx.db.execute('''SELECT members_json FROM registration_history
+                                 WHERE registration_id = ? ORDER BY id LIMIT 1''', (registration_id,)).fetchone()
+    members = json.loads(previous['members_json']) if previous else _members(ctx.db, team_id)
+    _history(ctx.db, record, 'resubmitted' if existing else 'submitted', user['id'], user['name'], now, members)
     return {"registration_id": registration_id, "status": "pending", "message": "报名已提交，等待审核"}
 
 
 def _review(ctx, registration_id, data):
-    ctx.require_admin()
+    user = ctx.require_admin()
     status = data.get("status")
     if status not in ("approved", "rejected"):
         raise ValueError("审核结果必须是通过或驳回")
@@ -147,14 +213,22 @@ def _review(ctx, registration_id, data):
         raise ValueError("报名记录不存在")
     if record["status"] != "pending":
         raise ValueError("只能审核待审核状态的报名")
+    now = datetime.now().isoformat(timespec="seconds")
     ctx.db.execute(
         "UPDATE registrations SET status = ?, review_note = ?, updated_at = ? WHERE id = ?",
-        (status, note, datetime.now().isoformat(timespec="seconds"), registration_id),
+        (status, note, now, registration_id),
     )
+    record = dict(ctx.db.execute('SELECT * FROM registrations WHERE id = ?', (registration_id,)).fetchone())
+    previous = ctx.db.execute('''SELECT members_json FROM registration_history
+                                 WHERE registration_id = ? ORDER BY id DESC LIMIT 1''', (registration_id,)).fetchone()
+    members = json.loads(previous['members_json']) if previous else _members(ctx.db, record['team_id'])
+    _history(ctx.db, record, status, user['id'], user['name'], now, members)
     return {"registration_id": registration_id, "status": status, "message": "审核结果已保存"}
 
 
 def handle(ctx, method, path, data):
+    if path == '/api/registrations/export' and method == 'GET':
+        return _export(ctx)
     if path == "/api/registrations":
         if method == "GET":
             return _list_registrations(ctx)

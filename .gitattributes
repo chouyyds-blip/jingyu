@@ -1,0 +1,5 @@
+# Preserve generated artifacts byte-for-byte across platforms.
+*.pdf binary
+*.png binary
+*.zip binary
+*.db binary

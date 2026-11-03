@@ -57,6 +57,7 @@ def initialize():
           status TEXT NOT NULL DEFAULT 'pending', review_note TEXT NOT NULL DEFAULT '',
           created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
         ''')
+        registrations.initialize(db)
         for username, name, role, major in [('admin','演示管理员','admin',''), ('zhou','周','student','计算机科学与技术'), ('wang','王','student','软件工程'), ('chen','陈','student','信息管理')]:
             db.execute('INSERT OR IGNORE INTO users(username,password_hash,name,role,major,grade) VALUES(?,?,?,?,?,?)',
                        (username, users.hash_password('Demo123456'), name, role, major, '2024级'))
@@ -111,6 +112,11 @@ class Context:
         SESSIONS.pop(self.token, None)
         self.cookie = 'sid=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'
         self.user = None
+
+    def revoke_other_sessions(self, user_id):
+        for token, session in list(SESSIONS.items()):
+            if token != self.token and session[0] == user_id:
+                SESSIONS.pop(token, None)
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -180,7 +186,9 @@ class Handler(SimpleHTTPRequestHandler):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--port',type=int,default=8000)
+    parser.add_argument('--db',type=Path,default=DB_PATH,help='SQLite 数据库路径；可指定独立验收库')
     args = parser.parse_args()
+    DB_PATH = args.db.resolve()
     initialize()
     print(f'课程演示系统: http://127.0.0.1:{args.port}', flush=True)
     print('账号: admin / zhou / wang / chen，演示密码: Demo123456', flush=True)

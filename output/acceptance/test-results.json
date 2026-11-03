@@ -1,0 +1,137 @@
+{
+  "executed_at": "2026-11-03T16:24:11+08:00",
+  "python": "3.12.10",
+  "os": "Windows-11-10.0.26100-SP0",
+  "tests_run": 25,
+  "failures": 0,
+  "errors": 0,
+  "successful": true,
+  "duration_seconds": 27.033,
+  "tests": [
+    {
+      "id": "test_chen.ChenRegistrationTest.test_export_formula_escaping_and_csv_quoting",
+      "status": "passed",
+      "seconds": 0.8009
+    },
+    {
+      "id": "test_chen.ChenRegistrationTest.test_history_and_export_access_control",
+      "status": "passed",
+      "seconds": 0.7233
+    },
+    {
+      "id": "test_chen.ChenRegistrationTest.test_history_full_state_cycle_and_failed_reviews",
+      "status": "passed",
+      "seconds": 0.7141
+    },
+    {
+      "id": "test_chen.ChenRegistrationTest.test_legacy_migration_is_idempotent_and_honest",
+      "status": "passed",
+      "seconds": 0.7539
+    },
+    {
+      "id": "test_chen.ChenRegistrationTest.test_member_and_actor_snapshots_survive_profile_changes",
+      "status": "passed",
+      "seconds": 0.6697
+    },
+    {
+      "id": "test_delivery.DeliveryTest.test_deadline_date_includes_today_and_offset_is_compared",
+      "status": "passed",
+      "seconds": 0.6482
+    },
+    {
+      "id": "test_delivery.DeliveryTest.test_invalid_payload_is_rejected_without_write",
+      "status": "passed",
+      "seconds": 0.7002
+    },
+    {
+      "id": "test_delivery.DeliveryTest.test_persistence_and_database_integrity",
+      "status": "passed",
+      "seconds": 1.2768
+    },
+    {
+      "id": "test_delivery.DeliveryTest.test_small_local_read_latency",
+      "status": "passed",
+      "seconds": 1.7566
+    },
+    {
+      "id": "test_delivery.DeliveryTest.test_static_delivery_does_not_expose_sources",
+      "status": "passed",
+      "seconds": 0.7701
+    },
+    {
+      "id": "test_system.SystemTest.test_01_auth_and_permissions",
+      "status": "passed",
+      "seconds": 1.0261
+    },
+    {
+      "id": "test_system.SystemTest.test_02_complete_workflow",
+      "status": "passed",
+      "seconds": 0.8976
+    },
+    {
+      "id": "test_system.SystemTest.test_03_deadline_capacity_and_unpublish",
+      "status": "passed",
+      "seconds": 0.7586
+    },
+    {
+      "id": "test_system.SystemTest.test_04_input_and_origin_validation",
+      "status": "passed",
+      "seconds": 0.7496
+    },
+    {
+      "id": "test_wang.WangTest.test_closed_competition_allows_cleanup_but_no_new_members",
+      "status": "passed",
+      "seconds": 0.9248
+    },
+    {
+      "id": "test_wang.WangTest.test_concurrent_approval_cannot_join_two_teams",
+      "status": "passed",
+      "seconds": 0.6744
+    },
+    {
+      "id": "test_wang.WangTest.test_concurrent_approval_has_one_capacity_winner",
+      "status": "passed",
+      "seconds": 0.9546
+    },
+    {
+      "id": "test_wang.WangTest.test_create_team_rejects_other_pending_applications",
+      "status": "passed",
+      "seconds": 0.6571
+    },
+    {
+      "id": "test_wang.WangTest.test_member_leave_remove_and_reapply",
+      "status": "passed",
+      "seconds": 0.6677
+    },
+    {
+      "id": "test_wang.WangTest.test_member_permissions_and_registration_lock",
+      "status": "passed",
+      "seconds": 0.6569
+    },
+    {
+      "id": "test_wang.WangTest.test_withdraw_own_pending_only_and_reapply",
+      "status": "passed",
+      "seconds": 0.6503
+    },
+    {
+      "id": "test_zhou.ZhouModulesTest.test_category_and_query_filters_compose",
+      "status": "passed",
+      "seconds": 0.7994
+    },
+    {
+      "id": "test_zhou.ZhouModulesTest.test_competition_rules_protect_existing_teams",
+      "status": "passed",
+      "seconds": 0.6439
+    },
+    {
+      "id": "test_zhou.ZhouModulesTest.test_password_change_revokes_other_sessions",
+      "status": "passed",
+      "seconds": 2.0056
+    },
+    {
+      "id": "test_zhou.ZhouModulesTest.test_registration_freezes_eligibility_rules",
+      "status": "passed",
+      "seconds": 0.6359
+    }
+  ]
+}

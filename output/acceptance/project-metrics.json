@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-11-03T16:37:24+08:00",
+  "method": "物理文本行数，含空行和注释；不代表工作量、作者或覆盖率",
+  "files": {
+    "server.py": 195,
+    "modules/__init__.py": 1,
+    "modules/registrations.py": 240,
+    "modules/teams.py": 296,
+    "modules/users.py": 215,
+    "static/app.js": 132,
+    "static/index.html": 35,
+    "static/style.css": 15,
+    "tests/support.py": 85,
+    "tests/test_chen.py": 116,
+    "tests/test_delivery.py": 73,
+    "tests/test_system.py": 78,
+    "tests/test_wang.py": 118,
+    "tests/test_zhou.py": 64,
+    "tools/backup_data.py": 34,
+    "tools/build_report.py": 287,
+    "tools/package_delivery.py": 58,
+    "tools/prepare_demo.py": 75,
+    "tools/project_metrics.py": 29,
+    "tools/verify.py": 61,
+    "tools/browser_check.cjs": 107
+  },
+  "physical_lines": 2314,
+  "repository_commit_count": 2,
+  "personal_commit_count": "无法从共享基线可靠归属，需本人提供证据",
+  "ai_assisted_lines": "未逐行记录，不能可靠精确统计"
+}

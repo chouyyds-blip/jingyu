@@ -116,6 +116,23 @@ def handle(ctx, method, path, data):
             return {"user": None}
         return {"user": {field: ctx.user.get(field, "") for field in PUBLIC_USER_FIELDS.split(", ")}}
 
+    if path == "/api/password" and method == "PUT":
+        user = ctx.require_user()
+        old_password = data.get("old_password")
+        new_password = data.get("new_password")
+        if not isinstance(old_password, str) or len(old_password) > 128:
+            raise ValueError("原密码不正确")
+        row = ctx.db.execute("SELECT password_hash FROM users WHERE id=?", (user["id"],)).fetchone()
+        if not verify_password(old_password, row["password_hash"]):
+            raise ValueError("原密码不正确")
+        if not isinstance(new_password, str) or not 8 <= len(new_password) <= 128:
+            raise ValueError("新密码长度须为 8 至 128 位")
+        if old_password == new_password:
+            raise ValueError("新密码不能与原密码相同")
+        ctx.db.execute("UPDATE users SET password_hash=? WHERE id=?", (hash_password(new_password), user["id"]))
+        ctx.revoke_other_sessions(user["id"])
+        return {"message": "密码已修改，其他登录会话已退出"}
+
     if path == "/api/profile" and method == "PUT":
         user = ctx.require_user()
         values = dict(user)
@@ -133,11 +150,17 @@ def handle(ctx, method, path, data):
         query = ctx.query.get("q", [""])[0].strip()
         if len(query) > 100:
             raise ValueError("搜索词不能超过 100 字")
+        category = ctx.query.get("category", [""])[0].strip()
+        if len(category) > 30:
+            raise ValueError("竞赛分类不能超过 30 字")
         conditions = [] if is_admin else ["active=1"]
         arguments = []
         if query:
             conditions.append("(title LIKE ? OR category LIKE ?)")
             arguments.extend([f"%{query}%", f"%{query}%"])
+        if category:
+            conditions.append("category = ?")
+            arguments.append(category)
         sql = "SELECT * FROM competitions"
         if conditions:
             sql += " WHERE " + " AND ".join(conditions)
@@ -167,6 +190,22 @@ def handle(ctx, method, path, data):
         if method == "GET":
             return {"competition": dict(row)}
         fields = _competition_data(data, dict(row))
+        # 报名生成后锁定资格规则，避免管理员的编辑使既有报名失效。
+        has_registration = ctx.db.execute(
+            "SELECT 1 FROM registrations r JOIN teams t ON t.id=r.team_id "
+            "WHERE t.competition_id=? LIMIT 1", (competition_id,)
+        ).fetchone()
+        if has_registration and any(fields[key] != row[key] for key in ("min_members", "max_members", "deadline")):
+            raise ValueError("该竞赛已有报名，不能修改人数限制和截止时间")
+        # 组队期间可以提高最低人数，但不能把现有队伍变成超员队伍。
+        largest = ctx.db.execute(
+            "SELECT COALESCE(MAX(member_count),0) FROM ("
+            "SELECT COUNT(*) AS member_count FROM team_members m "
+            "JOIN teams t ON t.id=m.team_id WHERE t.competition_id=? GROUP BY t.id)",
+            (competition_id,),
+        ).fetchone()[0]
+        if fields["max_members"] < largest:
+            raise ValueError(f"已有队伍人数为 {largest} 人，最多人数不能小于现有人数")
         ctx.db.execute(
             "UPDATE competitions SET " + ",".join(f"{key}=?" for key in fields) + " WHERE id=?",
             (*fields.values(), competition_id),

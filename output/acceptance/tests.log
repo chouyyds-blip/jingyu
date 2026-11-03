@@ -1,0 +1,400 @@
+test_export_formula_escaping_and_csv_quoting (test_chen.ChenRegistrationTest.test_export_formula_escaping_and_csv_quoting) ... 127.0.0.1 - - [03/Nov/2026 16:23:45] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:45] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:45] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:45] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:45] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:45] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:45] "POST /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:45] "GET /api/registrations/export HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:45] "GET /api/registrations HTTP/1.1" 200 -
+ok
+test_history_and_export_access_control (test_chen.ChenRegistrationTest.test_history_and_export_access_control) ... 127.0.0.1 - - [03/Nov/2026 16:23:46] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "POST /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "POST /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "GET /api/registrations/export HTTP/1.1" 403 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "GET /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "GET /api/registrations/export HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "GET /api/registrations/export HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "GET /api/registrations/export HTTP/1.1" 200 -
+ok
+test_history_full_state_cycle_and_failed_reviews (test_chen.ChenRegistrationTest.test_history_full_state_cycle_and_failed_reviews) ... 127.0.0.1 - - [03/Nov/2026 16:23:46] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:46] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/registrations/4/review HTTP/1.1" 403 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/registrations/4/review HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "GET /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/registrations/4/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/registrations/4/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/registrations/4/review HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "GET /api/registrations HTTP/1.1" 200 -
+ok
+test_legacy_migration_is_idempotent_and_honest (test_chen.ChenRegistrationTest.test_legacy_migration_is_idempotent_and_honest) ... 127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:47] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:48] "GET /api/registrations HTTP/1.1" 200 -
+ok
+test_member_and_actor_snapshots_survive_profile_changes (test_chen.ChenRegistrationTest.test_member_and_actor_snapshots_survive_profile_changes) ... 127.0.0.1 - - [03/Nov/2026 16:23:48] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:48] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:48] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:48] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:48] "GET /api/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:48] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:48] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:48] "POST /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:48] "PUT /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:48] "POST /api/registrations/6/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:48] "POST /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:48] "GET /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:48] "PUT /api/profile HTTP/1.1" 200 -
+ok
+test_deadline_date_includes_today_and_offset_is_compared (test_delivery.DeliveryTest.test_deadline_date_includes_today_and_offset_is_compared) ... 127.0.0.1 - - [03/Nov/2026 16:23:50] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:50] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:50] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:50] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:50] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:50] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:50] "POST /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:50] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:50] "POST /api/teams HTTP/1.1" 400 -
+ok
+test_invalid_payload_is_rejected_without_write (test_delivery.DeliveryTest.test_invalid_payload_is_rejected_without_write) ... 127.0.0.1 - - [03/Nov/2026 16:23:50] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:50] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:50] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:51] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:51] "PUT /api/profile HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:51] "PUT /api/profile HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:51] "PUT /api/profile HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:51] "PUT /api/profile HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:51] "GET /api/me HTTP/1.1" 200 -
+ok
+test_persistence_and_database_integrity (test_delivery.DeliveryTest.test_persistence_and_database_integrity) ... 127.0.0.1 - - [03/Nov/2026 16:23:51] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:51] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:51] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:51] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:51] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:51] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:51] "GET /api/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:52] "GET /api/teams HTTP/1.1" 200 -
+ok
+test_small_local_read_latency (test_delivery.DeliveryTest.test_small_local_read_latency) ... 127.0.0.1 - - [03/Nov/2026 16:23:52] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:52] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:52] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:53] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /api/competitions HTTP/1.1" 200 -
+ok
+test_static_delivery_does_not_expose_sources (test_delivery.DeliveryTest.test_static_delivery_does_not_expose_sources) ... 127.0.0.1 - - [03/Nov/2026 16:23:54] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /app.js HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /style.css HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] code 404, message File not found
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /server.py HTTP/1.1" 404 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] code 404, message File not found
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /../server.py HTTP/1.1" 404 -
+127.0.0.1 - - [03/Nov/2026 16:23:54] code 404, message File not found
+127.0.0.1 - - [03/Nov/2026 16:23:54] "GET /data/app.db HTTP/1.1" 404 -
+ok
+test_01_auth_and_permissions (test_system.SystemTest.test_01_auth_and_permissions) ... 127.0.0.1 - - [03/Nov/2026 16:23:56] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:56] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:56] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:56] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:56] "GET /api/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:56] "GET /api/registrations HTTP/1.1" 403 -
+127.0.0.1 - - [03/Nov/2026 16:23:56] "POST /api/competitions HTTP/1.1" 403 -
+127.0.0.1 - - [03/Nov/2026 16:23:56] "POST /api/login HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:56] "POST /api/register HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:56] "POST /api/register HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:56] "PUT /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:56] "GET /api/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:56] "POST /api/logout HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:56] "GET /api/me HTTP/1.1" 200 -
+ok
+test_02_complete_workflow (test_system.SystemTest.test_02_complete_workflow) ... 127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/teams HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/registrations HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/teams/1/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/teams/1/apply HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/applications/1/review HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/applications/1/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/teams/1/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/teams/1/apply HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/applications/2/review HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/applications/2/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/registrations HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/registrations HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "DELETE /api/teams/1 HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/registrations/1/review HTTP/1.1" 403 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/registrations/1/review HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/registrations/1/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/registrations/1/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "GET /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "GET /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "GET /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "POST /api/register HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:57] "GET /api/registrations HTTP/1.1" 200 -
+ok
+test_03_deadline_capacity_and_unpublish (test_system.SystemTest.test_03_deadline_capacity_and_unpublish) ... 127.0.0.1 - - [03/Nov/2026 16:23:58] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:58] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:58] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:58] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:58] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:58] "POST /api/teams HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:58] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:58] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:58] "POST /api/teams/2/apply HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:58] "PUT /api/competitions/6 HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:58] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:58] "GET /api/competitions/6 HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:58] "POST /api/registrations HTTP/1.1" 400 -
+ok
+test_04_input_and_origin_validation (test_system.SystemTest.test_04_input_and_origin_validation) ... 127.0.0.1 - - [03/Nov/2026 16:23:58] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:59] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:59] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:59] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:23:59] "PUT /api/profile HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:59] "POST /api/competitions HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:23:59] "PUT /api/profile HTTP/1.1" 403 -
+ok
+test_closed_competition_allows_cleanup_but_no_new_members (test_wang.WangTest.test_closed_competition_allows_cleanup_but_no_new_members) ... 127.0.0.1 - - [03/Nov/2026 16:24:00] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:00] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:00] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/teams/1/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/applications/1/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/teams/1/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "PUT /api/competitions/4 HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/register HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/applications/2/review HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "DELETE /api/applications/2 HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "DELETE /api/teams/1/members/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/teams/1/apply HTTP/1.1" 400 -
+ok
+test_concurrent_approval_cannot_join_two_teams (test_wang.WangTest.test_concurrent_approval_cannot_join_two_teams) ... 127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:01] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/teams/2/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/teams/3/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/applications/3/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/applications/2/review HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "GET /api/teams HTTP/1.1" 200 -
+ok
+test_concurrent_approval_has_one_capacity_winner (test_wang.WangTest.test_concurrent_approval_has_one_capacity_winner) ... 127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/teams/4/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/teams/4/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/applications/4/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "POST /api/applications/5/review HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:02] "GET /api/teams HTTP/1.1" 200 -
+ok
+test_create_team_rejects_other_pending_applications (test_wang.WangTest.test_create_team_rejects_other_pending_applications) ... 127.0.0.1 - - [03/Nov/2026 16:24:03] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:03] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:03] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:03] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:03] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:03] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:03] "POST /api/teams/5/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:03] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:03] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:03] "GET /api/teams HTTP/1.1" 200 -
+ok
+test_member_leave_remove_and_reapply (test_wang.WangTest.test_member_leave_remove_and_reapply) ... 127.0.0.1 - - [03/Nov/2026 16:24:03] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:03] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/teams/7/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/applications/7/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "DELETE /api/teams/7/members/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/teams/7/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/applications/7/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "GET /api/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "DELETE /api/teams/7/members/3 HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/teams/7/apply HTTP/1.1" 200 -
+ok
+test_member_permissions_and_registration_lock (test_wang.WangTest.test_member_permissions_and_registration_lock) ... 127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/teams/8/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/applications/8/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "GET /api/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "GET /api/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "DELETE /api/teams/8/members/me HTTP/1.1" 403 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "DELETE /api/teams/8/members/3 HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "DELETE /api/teams/8/members/me HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "DELETE /api/teams/8/members/me HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "DELETE /api/teams/8/members/2 HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "POST /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "DELETE /api/teams/8/members/me HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "DELETE /api/teams/8/members/3 HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:04] "GET /api/teams HTTP/1.1" 200 -
+ok
+test_withdraw_own_pending_only_and_reapply (test_wang.WangTest.test_withdraw_own_pending_only_and_reapply) ... 127.0.0.1 - - [03/Nov/2026 16:24:05] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "POST /api/teams/9/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "DELETE /api/applications/9 HTTP/1.1" 403 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "DELETE /api/applications/9 HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "DELETE /api/applications/9 HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "DELETE /api/applications/9 HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "GET /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "POST /api/teams/9/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "POST /api/applications/9/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "DELETE /api/applications/9 HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:05] "GET /api/teams HTTP/1.1" 200 -
+ok
+test_category_and_query_filters_compose (test_zhou.ZhouModulesTest.test_category_and_query_filters_compose) ... 127.0.0.1 - - [03/Nov/2026 16:24:07] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:07] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:07] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:07] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:07] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:07] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:07] "GET /api/competitions?category=%E6%B5%8B%E8%AF%95%E5%88%86%E7%B1%BB%E7%94%B2&q=%E7%BB%84%E5%90%88%E7%AD%9B%E9%80%89 HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:07] "GET /api/competitions?category=%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2%E7%94%B2 HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:07] "GET /api/competitions?category=%27%20OR%201%3D1%20-- HTTP/1.1" 200 -
+ok
+test_competition_rules_protect_existing_teams (test_zhou.ZhouModulesTest.test_competition_rules_protect_existing_teams) ... 127.0.0.1 - - [03/Nov/2026 16:24:07] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:07] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:07] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:08] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:08] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:08] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:08] "POST /api/teams/1/apply HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:08] "POST /api/applications/1/review HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:08] "PUT /api/competitions/6 HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:08] "PUT /api/competitions/6 HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:08] "GET /api/competitions/6 HTTP/1.1" 200 -
+ok
+test_password_change_revokes_other_sessions (test_zhou.ZhouModulesTest.test_password_change_revokes_other_sessions) ... 127.0.0.1 - - [03/Nov/2026 16:24:08] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:08] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:08] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:08] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:08] "POST /api/register HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "PUT /api/password HTTP/1.1" 403 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "PUT /api/password HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "GET /api/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "PUT /api/password HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "GET /api/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "PUT /api/password HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "GET /api/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "PUT /api/password HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "GET /api/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "PUT /api/password HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "GET /api/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "GET /api/me HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:09] "PUT /api/profile HTTP/1.1" 403 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "POST /api/login HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "POST /api/login HTTP/1.1" 200 -
+ok
+test_registration_freezes_eligibility_rules (test_zhou.ZhouModulesTest.test_registration_freezes_eligibility_rules) ... 127.0.0.1 - - [03/Nov/2026 16:24:10] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "POST /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "POST /api/teams HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "POST /api/registrations HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "PUT /api/competitions/7 HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "PUT /api/competitions/7 HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "PUT /api/competitions/7 HTTP/1.1" 400 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "PUT /api/competitions/7 HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "GET /api/competitions HTTP/1.1" 200 -
+127.0.0.1 - - [03/Nov/2026 16:24:10] "GET /api/registrations HTTP/1.1" 200 -
+ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 26.782s
+
+OK

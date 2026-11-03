@@ -90,11 +90,16 @@ def _list(ctx):
     if filter_id:
         clauses.append("t.competition_id = ?")
         args.append(_id(filter_id[0]))
-    # 已下架竞赛的队伍仅对本队成员和管理员可见。
+    # 待审申请者也保留自己申请的队伍入口，便于下架后撤回申请。
     if not ctx.user or ctx.user["role"] != "admin":
         if ctx.user:
-            clauses.append("(c.active = 1 OR EXISTS (SELECT 1 FROM team_members own WHERE own.team_id = t.id AND own.user_id = ?))")
-            args.append(ctx.user["id"])
+            clauses.append(
+                "(c.active = 1 OR EXISTS (SELECT 1 FROM team_members own "
+                "WHERE own.team_id = t.id AND own.user_id = ?) "
+                "OR EXISTS (SELECT 1 FROM applications own_app WHERE own_app.team_id = t.id "
+                "AND own_app.user_id = ? AND own_app.status = 'pending'))"
+            )
+            args.extend([ctx.user["id"], ctx.user["id"]])
         else:
             clauses.append("c.active = 1")
     sql = (
@@ -158,7 +163,40 @@ def handle(ctx, method, path, data):
         )
         team_id = cursor.lastrowid
         ctx.db.execute("INSERT INTO team_members (team_id, user_id) VALUES (?, ?)", (team_id, user["id"]))
+        # 创建队伍与批准入队遵循同一竞赛只能属于一队的规则。
+        ctx.db.execute(
+            "UPDATE applications SET status = 'rejected' WHERE user_id = ? AND status = 'pending' "
+            "AND team_id IN (SELECT id FROM teams WHERE competition_id = ?)",
+            (user["id"], competition_id),
+        )
         return {"team_id": team_id, "message": "队伍创建成功，你已成为队长"}
+
+    match = re.fullmatch(r"/api/teams/(\d+)/members/(me|\d+)", path)
+    if match and method == "DELETE":
+        user = ctx.require_user()
+        team = _team(ctx.db, int(match.group(1)))
+        leaving = match.group(2) == "me"
+        member_id = user["id"] if leaving else int(match.group(2))
+        if not leaving:
+            _require_captain(ctx, team)
+        if member_id == team["captain_id"]:
+            raise ValueError("队长不能退出或被移除，请在未报名时解散队伍")
+        _require_unregistered(ctx.db, team["id"])
+        member = ctx.db.execute(
+            "SELECT 1 FROM team_members WHERE team_id = ? AND user_id = ?",
+            (team["id"], member_id),
+        ).fetchone()
+        if member is None:
+            raise ValueError("该学生不是本队成员")
+        ctx.db.execute("DELETE FROM team_members WHERE team_id = ? AND user_id = ?",
+                       (team["id"], member_id))
+        # 保留已处理申请，但解除 approved 状态，让离队后可以再次申请。
+        ctx.db.execute(
+            "UPDATE applications SET status = 'rejected' "
+            "WHERE team_id = ? AND user_id = ? AND status = 'approved'",
+            (team["id"], member_id),
+        )
+        return {"message": "你已退出队伍" if leaving else "成员已移除"}
 
     match = re.fullmatch(r"/api/teams/(\d+)", path)
     if match and method in ("PUT", "DELETE"):
@@ -208,6 +246,20 @@ def handle(ctx, method, path, data):
                 (team["id"], user["id"], message, now),
             ).lastrowid
         return {"application_id": application_id, "message": "入队申请已提交"}
+
+    match = re.fullmatch(r"/api/applications/(\d+)", path)
+    if match and method == "DELETE":
+        user = ctx.require_user()
+        app = ctx.db.execute("SELECT * FROM applications WHERE id = ?", (int(match.group(1)),)).fetchone()
+        if app is None:
+            raise ValueError("入队申请不存在")
+        if app["user_id"] != user["id"]:
+            raise ValueError("只能撤回自己的入队申请")
+        if app["status"] != "pending":
+            raise ValueError("只能撤回待审核的申请")
+        # 撤回不改变成员，截止或下架后仍可撤回；再次申请仍需满足开放规则。
+        ctx.db.execute("DELETE FROM applications WHERE id = ?", (app["id"],))
+        return {"message": "入队申请已撤回"}
 
     match = re.fullmatch(r"/api/applications/(\d+)/review", path)
     if match and method == "POST":
