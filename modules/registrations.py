@@ -128,7 +128,7 @@ def _export(ctx):
     output = io.StringIO(newline='')
     writer = csv.writer(output)
     writer.writerow(['报名编号', '竞赛', '队伍', '联系人', '联系电话', '参赛说明', '成员', '状态', '审核意见', '提交时间', '更新时间'])
-    labels = {'pending': '待审核', 'approved': '已通过', 'rejected': '已驳回'}
+    labels = {'pending': '报名待审核', 'approved': '报名已通过', 'rejected': '需要修改报名'}
     for r in records:
         writer.writerow([_csv_cell(v) for v in (
             r['id'], r['competition_title'], r['team_name'], r['contact_name'],

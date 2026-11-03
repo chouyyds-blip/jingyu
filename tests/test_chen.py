@@ -41,7 +41,7 @@ class ChenRegistrationTest(SystemTestCase):
         self.assertEqual(history[2]['review_note'], '')
         self.assertEqual(history[3]['statement'], '补充后的第二版')
         self.assertEqual(history[0]['actor_id'], record['captain_id'])
-        self.assertEqual(history[1]['actor_name'], '演示管理员')
+        self.assertEqual(history[1]['actor_name'], '管理员')
         self.assertTrue(all(e['occurred_at'] for e in history))
         with closing(server.connect()) as db, db:
             self.assertEqual(db.execute('SELECT COUNT(*) FROM registration_history WHERE registration_id=?', (rid,)).fetchone()[0], 4)

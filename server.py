@@ -1,9 +1,10 @@
-"""本地课程演示服务器，仅使用 Python 标准库。"""
+"""本地竞赛与组队管理服务器，仅使用 Python 标准库。"""
 import argparse
 import json
 import secrets
 import sqlite3
 import traceback
+from contextlib import closing
 from datetime import datetime, timedelta
 from http import cookies
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -26,7 +27,7 @@ def connect():
 
 def initialize():
     DB_PATH.parent.mkdir(exist_ok=True)
-    with connect() as db:
+    with closing(connect()) as db, db:
         db.executescript('''
         CREATE TABLE IF NOT EXISTS users (
           id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE,
@@ -58,15 +59,15 @@ def initialize():
           created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
         ''')
         registrations.initialize(db)
-        for username, name, role, major in [('admin','演示管理员','admin',''), ('zhou','周','student','计算机科学与技术'), ('wang','王','student','软件工程'), ('chen','陈','student','信息管理')]:
+        for username, name, role, major in [('admin','管理员','admin',''), ('zhou','周','student','计算机科学与技术'), ('wang','王','student','软件工程'), ('chen','陈','student','信息管理')]:
             db.execute('INSERT OR IGNORE INTO users(username,password_hash,name,role,major,grade) VALUES(?,?,?,?,?,?)',
                        (username, users.hash_password('Demo123456'), name, role, major, '2024级'))
         if not db.execute('SELECT 1 FROM competitions').fetchone():
             deadline = (datetime.now() + timedelta(days=60)).strftime('%Y-%m-%dT23:59')
             db.executemany('INSERT INTO competitions(title,category,description,deadline,min_members,max_members) VALUES(?,?,?,?,?,?)', [
-                ('校园软件创意设计赛（演示）','软件开发','围绕校园真实问题，设计并实现一个可演示的软件原型。此条为课程演示数据。',deadline,3,3),
-                ('大学生数据应用挑战赛（演示）','数据分析','选择一个公开数据集完成分析，提交分析说明和作品。此条为课程演示数据。',deadline,1,3),
-                ('校园交互设计赛（演示）','创新设计','以校园服务为主题完成交互原型与设计说明。此条为课程演示数据。',deadline,1,4)])
+                ('校园软件创意设计赛','软件开发','围绕校园问题，设计并实现一个软件原型。',deadline,3,3),
+                ('大学生数据应用挑战赛','数据分析','选择一个公开数据集完成分析，提交分析说明和作品。',deadline,1,3),
+                ('校园交互设计赛','创新设计','以校园服务为主题完成交互原型与设计说明。',deadline,1,4)])
 
 
 class Context:
@@ -190,6 +191,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
     DB_PATH = args.db.resolve()
     initialize()
-    print(f'课程演示系统: http://127.0.0.1:{args.port}', flush=True)
-    print('账号: admin / zhou / wang / chen，演示密码: Demo123456', flush=True)
+    print(f'竞遇: http://127.0.0.1:{args.port}', flush=True)
+    print('初始账号: admin / zhou / wang / chen，初始密码: Demo123456', flush=True)
     ThreadingHTTPServer(('127.0.0.1',args.port), Handler).serve_forever()

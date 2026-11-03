@@ -15,6 +15,15 @@ python server.py --db data/acceptance.db --port 8000
 
 上面的生成命令只在目标库尚不存在时运行，存在会拒绝覆盖。端口占用可改8001。原 `start.bat` 或 `python server.py` 仍打开原 `data/app.db`，没有重置原业务库。首次升级旧库会自动建立历史表：旧记录只生成诚实的现状迁移事件，不能恢复此前未记录的审核人和表单。
 
+页面已使用自然的竞赛和队伍名称。报名状态在独立区域展示：“报名待审核”表示已提交等待管理员处理；“需要修改报名”表示队长需按修改原因调整并在截止前重提；“报名已通过”表示审核完成。底层仍使用 `pending / rejected / approved`，入队申请使用独立的状态文案。
+
+已有库的旧初始化文案可定向整理，默认预览，应用前自动备份；重复执行不会再次修改。不会清库或替换用户自行填写的相似文本。操作范围、来源说明和验证记录见 [初始化文案整理](docs/初始化文案整理.md)。
+
+```powershell
+python tools/migrate_seed_content.py
+python tools/migrate_seed_content.py --apply
+```
+
 完整演示、备份、边界与本人准备见 [验收指南](docs/验收指南.md)。
 
 ## 三人分工与交付
@@ -52,7 +61,7 @@ python server.py --db data/acceptance.db --port 8000
 python tools/verify.py
 ```
 
-保存 `output/acceptance/test-results.json`、`tests.log`、`performance.json`。也可运行 `python -m unittest discover -s tests -v`。测试仅用tmp/独立库和随机端口，不改业务数据。当前25组HTTP测试，覆盖完整流程、角色、输入、日期、并发、快照、迁移、导出与持久性；具体最新执行结论以JSON为准，不代表代码覆盖率。
+保存 `output/acceptance/test-results.json`、`tests.log`、`performance.json`。也可运行 `python -m unittest discover -s tests -v`。测试仅用tmp/独立库和随机端口，不改业务数据。当前29组后端与迁移测试，覆盖完整流程、角色、输入、日期、并发、快照、迁移、导出、持久性和初始化文案整理；具体最新执行结论以JSON为准，不代表代码覆盖率。
 
 可选页面验证脚本 `tools/browser_check.cjs` 需要Playwright及Edge，对BASE_URL指定的独立测试库操作并保存截图和 `browser-results.json`。统计脚本 `python tools/project_metrics.py` 只统计物理行数与真实仓库提交，不推算个人贡献和AI比例。
 
