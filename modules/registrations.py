@@ -168,7 +168,7 @@ def _submit(ctx, data):
 
     contact_name = _text(data, "contact_name", "联系人姓名", 40)
     contact_phone = _text(data, "contact_phone", "联系电话", 30)
-    if not re.fullmatch(r"\+?[0-9()\-\s]{6,30}", contact_phone) or not (
+    if not re.fullmatch(r"\+?[0-9()\- ]{6,30}", contact_phone) or not (
         6 <= sum(character.isdigit() for character in contact_phone) <= 20
     ):
         raise ValueError("请输入有效联系电话，支持数字、空格、括号和短横线")

@@ -8,6 +8,18 @@ from support import Client, SystemTestCase, server
 
 
 class ChenRegistrationTest(SystemTestCase):
+    def test_phone_rejects_embedded_control_characters(self):
+        tid = self.team(self.competition(min_members=1))
+        data = {'team_id': tid, 'contact_name': '陈', 'statement': '电话格式验证'}
+        for phone in ('138\n00000000', '138\r00000000', '138\t00000000'):
+            with self.subTest(phone=phone):
+                self.assertEqual(self.zhou.call('/registrations', 'POST',
+                    {**data, 'contact_phone': phone})[0], 400)
+        self.assertFalse(any(r['team_id'] == tid for r in
+                             self.zhou.call('/registrations')[1]['registrations']))
+        self.assertEqual(self.zhou.call('/registrations', 'POST',
+            {**data, 'contact_phone': '+86 (138) 0000-0000'})[0], 200)
+
     def submit(self, client=None, **changes):
         cid = self.competition(min_members=1, max_members=3)
         tid = self.team(cid, client)
