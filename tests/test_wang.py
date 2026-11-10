@@ -4,6 +4,13 @@ from support import Client, SystemTestCase
 
 
 class WangTest(SystemTestCase):
+    def test_oversized_competition_id_returns_bad_request(self):
+        for value in (9223372036854775808, '9' * 100, True, 1.5):
+            with self.subTest(value=value):
+                self.assertEqual(self.zhou.call('/teams', 'POST',
+                    {'competition_id': value, 'name': '非法编号队伍'})[0], 400)
+        self.team(self.competition(min_members=1))
+
     def apply(self, tid, client=None):
         code, result = (client or self.wang).call(f'/teams/{tid}/apply', 'POST', {'message': '申请协作'})
         self.assertEqual(code, 200, result)

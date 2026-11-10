@@ -23,7 +23,7 @@ def _id(value):
         parsed = int(value)
     except (TypeError, ValueError):
         raise ValueError("编号格式不正确") from None
-    if parsed <= 0 or str(parsed) != str(value):
+    if not 1 <= parsed <= 9223372036854775807 or str(parsed) != str(value):
         raise ValueError("编号格式不正确")
     return parsed
 
