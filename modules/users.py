@@ -68,8 +68,12 @@ def _competition_data(data, existing=None):
     if result["official_url"]:
         try:
             parsed = urlsplit(result["official_url"])
-            if parsed.scheme not in ("http", "https") or not parsed.netloc:
+            if (parsed.scheme not in ("http", "https") or not parsed.hostname
+                    or parsed.username is not None or parsed.password is not None
+                    or any(character.isspace() for character in result["official_url"])):
                 raise ValueError
+            # urlsplit 延迟到读取 port 时才校验端口格式和范围。
+            parsed.port
         except ValueError:
             raise ValueError("官方网站链接须为有效的 http 或 https 地址") from None
     active = values.get("active", 1)

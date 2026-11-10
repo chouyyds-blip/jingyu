@@ -5,6 +5,17 @@ from support import SystemTestCase, Client
 
 
 class ZhouModulesTest(SystemTestCase):
+    def test_official_url_rejects_invalid_authority(self):
+        cid = self.competition(official_url='https://example.com:8443/contest')
+        for url in ('https://example.com:bad', 'https://example.com:65536',
+                    'https://user:secret@example.com', 'https://:443',
+                    'https://exam ple.com/path', 'https://example.com/line\nbreak'):
+            with self.subTest(url=url):
+                self.assertEqual(self.admin.call(f'/competitions/{cid}', 'PUT',
+                                                {'official_url': url})[0], 400)
+        saved = self.admin.call(f'/competitions/{cid}')[1]['competition']
+        self.assertEqual(saved['official_url'], 'https://example.com:8443/contest')
+
     def test_password_change_revokes_other_sessions(self):
         first, second = Client(self.base), Client(self.base)
         payload = {"username": "password_case", "name": "改密测试", "password": "Password123"}
