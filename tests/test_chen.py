@@ -8,6 +8,22 @@ from support import Client, SystemTestCase, server
 
 
 class ChenRegistrationTest(SystemTestCase):
+    def test_registration_uses_competition_minimum_not_team_capacity(self):
+        form = {'contact_name': '周', 'contact_phone': '13800000000', 'statement': '测试报名'}
+        solo = self.team(self.competition(min_members=1, max_members=3))
+        self.assertEqual(self.zhou.call('/registrations', 'POST', {**form, 'team_id': solo})[0], 200)
+
+        pair = self.team(self.competition(min_members=2, max_members=3))
+        code, error = self.zhou.call('/registrations', 'POST', {**form, 'team_id': pair})
+        self.assertEqual(code, 400)
+        self.assertIn('2至3人', error['error'])
+        aid = self.wang.call(f'/teams/{pair}/apply', 'POST', {})[1]['application_id']
+        self.assertEqual(self.zhou.call(f'/applications/{aid}/review', 'POST', {'status': 'approved'})[0], 200)
+        self.assertEqual(self.zhou.call('/registrations', 'POST', {**form, 'team_id': pair})[0], 200)
+
+        three = self.team(self.competition(min_members=3, max_members=3))
+        self.assertEqual(self.zhou.call('/registrations', 'POST', {**form, 'team_id': three})[0], 400)
+
     def test_phone_rejects_embedded_control_characters(self):
         tid = self.team(self.competition(min_members=1))
         data = {'team_id': tid, 'contact_name': '陈', 'statement': '电话格式验证'}
