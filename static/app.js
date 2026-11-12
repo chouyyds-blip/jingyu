@@ -50,9 +50,30 @@ async function refresh(){
 function renderCompetitions(){
  heading('发现竞赛','找到感兴趣的方向，开启你的下一次挑战。',admin()?'<button class="btn primary" data-action="competition-new">＋ 发布竞赛</button>':'');
  const categories=[...new Set(state.competitions.map(c=>c.category))];
- const list=state.competitions.filter(c=>(!state.query||(c.title+' '+c.category).toLowerCase().includes(state.query.toLowerCase()))&&(!state.category||c.category===state.category));
- $('#content').innerHTML=`<div class="toolbar"><input id="search" aria-label="按竞赛名称搜索" placeholder="搜索竞赛名称…" value="${esc(state.query)}"><select id="category" aria-label="竞赛分类"><option value="">全部分类</option>${categories.map(c=>`<option ${state.category===c?'selected':''}>${esc(c)}</option>`).join('')}</select><span class="form-note">共 ${list.length} 项竞赛</span></div>`+(list.length?`<div class="grid">${list.map(c=>`<article class="card"><div class="card-top"><span class="tag">${esc(c.category)}</span>${!c.active?'<span class="status inactive">已下架</span>':expired(c.deadline)?'<span class="status inactive">已截止</span>':'<span class="status approved">报名开放</span>'}</div><h3>${esc(c.title)}</h3><p class="description">${esc(c.description.slice(0,85))}</p><div class="meta"><span>◷ 截止 ${esc(c.deadline.replace('T',' '))}</span><span>♧ ${c.min_members}–${c.max_members} 人 / 队</span></div><div class="card-bottom"><span>${state.teams.filter(t=>t.competition_id===c.id).length} 支队伍正在集结</span><div class="actions">${admin()?`<button class="link" data-action="competition-edit" data-id="${c.id}">编辑</button>`:''}<button class="btn small" data-action="competition-detail" data-id="${c.id}">查看详情 ↗</button></div></div></article>`).join('')}</div>`:empty('暂无符合条件的竞赛','试试其他关键词或分类。'));
- $('#search').oninput=e=>{const start=e.target.selectionStart;state.query=e.target.value;renderCompetitions();$('#search').focus();$('#search').setSelectionRange(start,start);};$('#category').onchange=e=>{state.category=e.target.value;renderCompetitions();};
+$('#content').innerHTML=`<div class="toolbar"><input id="search" aria-label="按竞赛名称搜索" placeholder="搜索竞赛名称…" value="${esc(state.query)}"><select id="category" aria-label="竞赛分类"><option value="">全部分类</option>${categories.map(c=>`<option ${state.category===c?'selected':''}>${esc(c)}</option>`).join('')}</select><span class="form-note">共 0 项竞赛</span></div><div id="competition-results"></div>`;
+ const search = $('#search');
+ function updateQuery() {
+  state.query = search.value;
+  renderCompetitionResults();
+ }
+ search.addEventListener('input', event => {
+  if (!event.isComposing) updateQuery();
+ });
+ search.addEventListener('compositionend', updateQuery);
+ $('#category').onchange = event => {
+  state.category = event.target.value;
+  renderCompetitionResults();
+ };
+ renderCompetitionResults();
+}
+function renderCompetitionResults(){
+ const query = state.query.trim().toLowerCase();
+ const list = state.competitions.filter(c =>
+  (!query || c.title.toLowerCase().includes(query) || c.category.toLowerCase().includes(query)) &&
+  (!state.category || c.category === state.category)
+ );
+ $('#content .toolbar .form-note').textContent = `共 ${list.length} 项竞赛`;
+ $('#competition-results').innerHTML = list.length?`<div class="grid">${list.map(c=>`<article class="card"><div class="card-top"><span class="tag">${esc(c.category)}</span>${!c.active?'<span class="status inactive">已下架</span>':expired(c.deadline)?'<span class="status inactive">已截止</span>':'<span class="status approved">报名开放</span>'}</div><h3>${esc(c.title)}</h3><p class="description">${esc(c.description.slice(0,85))}</p><div class="meta"><span>◷ 截止 ${esc(c.deadline.replace('T',' '))}</span><span>♧ ${c.min_members}–${c.max_members} 人 / 队</span></div><div class="card-bottom"><span>${state.teams.filter(t=>t.competition_id===c.id).length} 支队伍正在集结</span><div class="actions">${admin()?`<button class="link" data-action="competition-edit" data-id="${c.id}">编辑</button>`:''}<button class="btn small" data-action="competition-detail" data-id="${c.id}">查看详情 ↗</button></div></div></article>`).join('')}</div>`:empty('暂无符合条件的竞赛','试试其他关键词或分类。');
 }
 function competitionDetail(id){const c=state.competitions.find(x=>x.id===id);showModal(c.title,`<span class="tag">${esc(c.category)}</span><p class="detail-text">${esc(c.description)}</p><div class="meta"><span>截止：${esc(c.deadline.replace('T',' '))}</span><span>人数：${c.min_members}–${c.max_members} 人</span></div>${c.official_url?`<p><a href="${esc(c.official_url)}" target="_blank" rel="noopener noreferrer">访问竞赛官网 ↗</a></p>`:''}<div class="hint">本系统仅提供内部组队与报名登记，实际参赛要求以主办方通知为准。</div><div class="actions"><button class="btn" data-action="find-team" data-id="${id}">查看相关队伍</button>${competitionOpen(c)&&!admin()?`<button class="btn primary" data-action="team-new" data-id="${id}">为此竞赛创建队伍</button>`:''}</div>`);}
 function competitionForm(id){
